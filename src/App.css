@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+
+* {
+  font-family: "Work Sans", sans-serif;
+}
+
+.fit_content {
+  min-height: 200px;
+}
+.custom {
+  min-width: 300px;
+}
+.transform {
+  transform: translateY(-2px);
+}
+.content_max {
+  max-width: fit-content;
+}
+.custom_class {
+  min-width: 125px;
+  min-height: 110px;
+}
+.mx-100 {
+  min-width: 100%;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+.item-3 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.h-fixed {
+  height: 500px;
+}
+
+@media (max-width: 992px) {
+  .responsive {
+    flex-wrap: wrap;
+  }
+  .custom {
+    min-width: 27vw;
+  }
+}
+@media (max-width: 750px) {
+  .responsive {
+    flex-direction: column;
+    padding: 20px;
+  }
+  .custom {
+    width: 249px;
+    height: 163px;
+    margin: 20px auto;
+  }
+}
