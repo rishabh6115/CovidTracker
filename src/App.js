@@ -46,12 +46,11 @@ function App() {
   const handleSearch = (e) => {
     e.preventDefault();
     const inp = inputData.current.value;
-    console.log(inp);
+
     if (inp) {
       const filterList = countryData.filter(
         (e) => e.country.toLowerCase() === inp.toLowerCase()
       );
-      console.log(filterList);
       setCountryData(filterList);
     } else {
       fetchCountries();
