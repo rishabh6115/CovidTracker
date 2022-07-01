@@ -49,7 +49,7 @@ function App() {
 
     if (inp) {
       const filterList = countryData.filter(
-        (e) => e.country.toLowerCase() === inp.toLowerCase()
+        (e) => e.country.toLowerCase() === inp.toLowerCase().trim()
       );
       setCountryData(filterList);
     } else {
