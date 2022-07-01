@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { BiHealth } from "react-icons/bi";
 import CountryList from "./Components/CountryList";
 
@@ -9,12 +9,13 @@ function App() {
   const [userDataInfo, setuserDataInfo] = useState([]);
   const [countryData, setCountryData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const inputData = useRef();
 
   const fetchHandler = async () => {
     try {
       const response = await fetch("https://disease.sh/v3/covid-19/all");
       const data = await response.json();
-      console.log(data);
+
       setuserDataInfo(data);
     } catch (err) {
       throw new Error(err);
@@ -27,7 +28,8 @@ function App() {
 
       const response = await fetch("https://disease.sh/v3/covid-19/countries");
       const data = await response.json();
-      setCountryData(data);
+      const filter = data.filter((e) => e.country !== "Diamond Princess");
+      setCountryData(filter);
       setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -40,6 +42,28 @@ function App() {
     fetchHandler();
     fetchCountries();
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const inp = inputData.current.value;
+    console.log(inp);
+    if (inp) {
+      const filterList = countryData.filter(
+        (e) => e.country.toLowerCase() === inp.toLowerCase()
+      );
+      console.log(filterList);
+      setCountryData(filterList);
+    } else {
+      fetchCountries();
+    }
+  };
+
+  const onChangeHandler = () => {
+    const inp = inputData.current.value;
+    if (!inp) {
+      fetchCountries();
+    }
+  };
 
   return (
     <div className="App">
@@ -103,8 +127,27 @@ function App() {
           </div>
         </div>
         <div className="shadow rounded d-flex flex-column">
-          <span className="d-flex justify-content-center fs-3 my-3 content_max mx-auto border-bottom">
-            Country List
+          <span className="d-flex justify-content-around fs-3  border-bottom align-items-center custom_class">
+            <span className="my-3 border-bottom">Country List</span>
+
+            <form
+              className="d-flex my-2 custom_c form-height"
+              onSubmit={handleSearch}
+            >
+              <input
+                className="mx-2 border-0 shadow-sm rounded px-2 fs-10"
+                type="search"
+                ref={inputData}
+                placeholder="Search Countries"
+                onChange={onChangeHandler}
+              />
+              <button
+                className="fs-10 border-0 shadow-sm rounded bg-info text-white fs-semibold px-3"
+                type="submit"
+              >
+                Submit
+              </button>
+            </form>
           </span>
           <div className="d-flex flex-wrap justify-content-evenly ">
             {loading ? (

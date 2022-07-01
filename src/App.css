@@ -18,7 +18,7 @@
 }
 .custom_class {
   min-width: 125px;
-  min-height: 110px;
+  min-height: 70px;
 }
 .mx-100 {
   min-width: 100%;
@@ -33,7 +33,7 @@
   grid-column-end: 3;
 }
 .h-fixed {
-  height: 500px;
+  height: 450px;
 }
 
 @media (max-width: 992px) {
@@ -54,4 +54,26 @@
     height: 163px;
     margin: 20px auto;
   }
+}
+.fs-10 {
+  font-size: 15px;
+}
+
+@media (max-width: 550px) {
+  .custom_class {
+    flex-direction: column;
+  }
+  .custom_c {
+    margin-bottom: 20px !important;
+  }
+}
+
+@media (max-width: 690px) {
+  .h-fixed {
+    height: auto;
+  }
+}
+
+.form-height {
+  height: 42px;
 }
