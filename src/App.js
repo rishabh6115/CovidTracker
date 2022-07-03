@@ -119,7 +119,7 @@ function App() {
 
             <form className="d-flex my-2 custom_c form-height">
               <input
-                className="mx-2 border-0 shadow-sm rounded px-2 fs-10 "
+                className="mx-2 border-0 shadow-sm rounded px-2 fs-10 text-center"
                 type="search"
                 ref={inputData}
                 placeholder="Search Countries"
