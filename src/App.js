@@ -2,7 +2,6 @@ import "./App.css";
 import { useEffect, useState, useRef } from "react";
 import { BiHealth } from "react-icons/bi";
 import CountryList from "./Components/CountryList";
-
 import { SpinnerDotted } from "spinners-react";
 
 function App() {
@@ -15,7 +14,6 @@ function App() {
     try {
       const response = await fetch("https://disease.sh/v3/covid-19/all");
       const data = await response.json();
-
       setuserDataInfo(data);
     } catch (err) {
       throw new Error(err);
@@ -25,11 +23,11 @@ function App() {
   const fetchCountries = async () => {
     try {
       setLoading(true);
-
       const response = await fetch("https://disease.sh/v3/covid-19/countries");
       const data = await response.json();
       const filter = data.filter((e) => e.country !== "Diamond Princess");
-      setCountryData(filter);
+      const limitedArray = filter.slice(0, 20);
+      setCountryData(limitedArray);
       setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -43,23 +41,14 @@ function App() {
     fetchCountries();
   }, []);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const onChangeHandler = () => {
     const inp = inputData.current.value;
-
     if (inp) {
-      const filterList = countryData.filter(
-        (e) => e.country.toLowerCase() === inp.toLowerCase().trim()
+      const filterList = countryData.filter((e) =>
+        e.country.toLowerCase().includes(inp.toLowerCase())
       );
       setCountryData(filterList);
     } else {
-      fetchCountries();
-    }
-  };
-
-  const onChangeHandler = () => {
-    const inp = inputData.current.value;
-    if (!inp) {
       fetchCountries();
     }
   };
@@ -129,23 +118,14 @@ function App() {
           <span className="d-flex justify-content-around fs-3  border-bottom align-items-center custom_class">
             <span className="my-3 border-bottom">Country List</span>
 
-            <form
-              className="d-flex my-2 custom_c form-height"
-              onSubmit={handleSearch}
-            >
+            <form className="d-flex my-2 custom_c form-height">
               <input
-                className="mx-2 border-0 shadow-sm rounded px-2 fs-10"
+                className="mx-2 border-0 shadow-sm rounded px-2 fs-10 "
                 type="search"
                 ref={inputData}
                 placeholder="Search Countries"
                 onChange={onChangeHandler}
               />
-              <button
-                className="fs-10 border-0 shadow-sm rounded bg-info text-white fs-semibold px-3"
-                type="submit"
-              >
-                Submit
-              </button>
             </form>
           </span>
           <div className="d-flex flex-wrap justify-content-evenly ">
